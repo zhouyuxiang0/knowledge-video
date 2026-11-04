@@ -1,0 +1,79 @@
+# Sound: music edits, effects, loudness
+
+## 按主题与情绪选曲
+
+- 先看视频讲什么、希望观众产生什么感受，再选气质相符的曲风。以搭着旁白和画面试听后的自然、贴题、不抢人声为准，随后调整音量。
+- 可尝试的方向：心理与自我理解题材用温和钢琴或轻柔氛围；动物机制用轻巧拨弦或俏皮器乐；机械科技用干净电子与适度律动；认知判断用略带悬念的极简器乐；宇宙自然用开阔氛围或舒展弦乐。这些是选曲线索，具体情绪由当期内容决定，不固定绑定题材和曲风。
+- 一首合适的曲子可以贯穿全片；只有明确的情绪转折或内容需要时，再考虑换段或换曲。不要求逐段编排、频繁切换或复杂卡点。
+- 日常选曲保持简单，不默认做音源分离、频谱或分贝对标；技术测量只在具体声音问题需要时辅助使用，不能代替曲风、情绪与主题是否匹配的试听判断。
+
+以下剪辑工具、参数和旧案例按实际需要参考，不是每条视频的必做流程。
+
+## 文案与讲述方式共同试读
+
+- 先按用户最新要求确定表达强度，沿用选定音色与制作路线；新要求优先于旧的“不要控制语气”或表演偏好。用户仍不希望控制语气时，停止表达参数试验，让实际内容在平直讲述下也成立。娱乐目标仍由处境、变化、信息反差及画面承担。
+- 用户要求“稍带感情”时，以自然交谈中的轻微好奇、温和态度和少量语义重音为目标；问句、转折与落点可以有小幅变化，不逐句加情绪、不夸张惊叹、不煽情、不换角色腔。以用户要求和题材决定尺度，不把这一偏好推广成所有项目的固定声音风格。
+- 区分音色、表达方式与文字问题。用户认可音色不代表新稿的语气已经合适；指代不清、缺少铺垫或因果跳步仍须改稿，不能只加强重音或延长停顿。
+- 用当前引擎时先核实它实际接收哪些控制，把讲述提示与朗读正文分开；不杜撰情绪参数，也不把提示词混入字幕。先用包含实际问题、转折和重点的短段作少量对照，保持文字、参考人声、种子、其他生成设置与恒定音量处理一致，只改变表达提示。保留原生输出，核对漏读、提示被念出、音色漂移、重音或停顿过度；参数被接收不等于表达已经有效。用后期变调、变速或动态音量起伏造情绪，不能代替用户要求的原生讲述。
+- 以实际试听判断文案与声音是否配合，记录已确认的版本和范围。ASR、波形与时长只能辅助定位问题；未听审时提供可播放的对照，不宣称更自然，也不把试验参数直接改为所有作品的默认值。
+
+## 多音字与读音放行
+
+多音字错误可能被识别器按语义还原成正确汉字，因此“原稿＝字幕＝ASR”仍可能漏掉错误声调。按词义确定目标读音，再核对声音；不能把标注拼音当成已经控制了模型。
+
+- 配音前顺读全文，按**每一次出现的位置**记录有多种读法的字词、专名和难读词：完整短句、目标读音（带声调）、语境依据。同一字在同句或邻句里异读的地方分别列项，例如“干处 gān chù／干活 gàn huó”；不能只给“干”登记一个默认音。同一个词的重复出现也要各有音频位置，不能从一次正确推到全文。词义不确定时查可靠词典或专业来源，不能凭转写倒定读音；正常变调、轻声不当作错读。
+- 若组合本身拗口或消歧不稳定，先在保留原意的前提下改成普通词组，例如“干燥的地方工作”，不要为了测试读音保留难懂的句子。用户要求保留原句时遵从；生成输入、显示文稿和字幕若不同，分别保存并说明用途，不往字幕塞拼音。仅采用当前引擎确实支持且在实际音频中验证有效的音素/拼音控制；没有此能力时不杜撰 SSML 或给同音字替换下保证。
+- 合成后用对齐或 ASR **定位**这些句子，提供带前后语境的原速短音频；原声与最终混音分别核查。审查记录绑定音频摘要、时间范围，逐项填“目标读音、实际听到的音、判断、听辨者及方式”。没听见、听不清、只有文字证据时保持“待听辨”，不能照抄目标音为实听音。用户指出错误后立即撤销该项旧结论，并检查全文同字的其他出现位置。
+- 只有实际听辨支持正确才通过。不能听音的执行环境应尽早交付短试听供用户确认，并继续不依赖该判断的可逆制作；不把未听辨的风险项写成已通过，也不把该版宣布为已验收或可发布。已经明确的错读先修，不能仅附免责声明交付原错版。
+- 借助音频模型听审时，先用已知读音的正误对照、同一汉字的不同读法、静音和无关音频做盲测，检查能否听出实际音并在无证据时拒答；先不给原稿与目标音，避免按文字猜答案。通用转写通过不等于声调辨别通过，未校准的模型只用于定位疑点。现有可靠工具足够时不增加模型试验；外部上传和付费仍需相应授权。
+- 确认错读后只重做受影响的完整语义句及必要接缝。复听新音中的全部风险词，检查首尾、音色、接缝；不剪拼单字声调、不拉伸语音。字幕、镜头和音效按真实新时码重算，保留未改语音及采样映射。换了文字、合成设置或声源后，旧听辨结论不继承；只是音频无损复制且摘要相同，才可继承同一范围的原声结论，最终混音可听清程度仍另查。
+- 每次交付报告当前风险项是否全部通过，未确认项具体落在哪一句。流程能减少漏检，不能承诺所有未来生成天然正确；也不能用“无法保证”替代应完成的检查和修复。
+
+## 旁白的语义停顿返修
+
+- 局部重配的试听须带上保留原声的前一句、替换句和后一句，实际听到两侧接缝；结尾替换至少连着最后一个保留的正文段落听。分别播放两个新片段不能证明接回全文没有换人感；同一参考与参数也不能。先验证这段上下文，再合入整片。用户反馈跨段偏差时撤销接缝放行，保留原版；在既有路线内用上下文续接或全文连续生成处理，不把增益对齐或技术检查当作音色一致性的证明。
+- 对照试听与成片的人声处理链要分别记录。设置 `loudnorm linear=true` 仍可能因峰值条件回退到动态处理；检查实际第二遍输出模式。只做固定音量的样音被认可后，不能默认追加动态响度或限制峰值仍保持同样语气；比较合成差异时先用一致的恒定增益保留原生强弱。
+- 相同增益不代表不同原声等响。音量跳变先按用户指出的接缝定位，再做只改局部固定增益的对照；全段平均响度不能否定用户的局部听感，其他位置的峰值也不能替代目标接缝。增益对照未试听前，不宣称音色或衔接已修复。
+- 常规流程先原生生成一版语音，再结合原文语义、字词对齐和波形检查并修正停顿；不要因为停顿问题反复重生成整句或不断寻找听审模型。用户选择这种检查方式时，按约定完成成片并清楚标注证据边界。
+- 用户实际听过后仍明确不能接受错误停顿，或要求更换合成模型时，将当前版本的停顿验收记为失败，重新评估合成路线；旧音色认可、识别正确和安全静音剪辑不能覆盖这次反馈。用同一参考人声及含长句、转折、并列的完整原文比较少量候选，先听未经停顿修补的原生输出。排除按字数强制目标时长等生成约束的影响，分别判断音色、语义停顿与语速；没有对照证据时不把全部问题归因于模型。候选在当前语言和参考音色下通过实际试听后再替换整片。
+- 实际听审与文本/波形检查分开记录。只有承诺模型听审时才先验证音频接收和理解能力：用不提供原稿的语音、静音与不同停顿对照校准；只转写、编字或不能区分停顿时，不计为有效听审。外部上传和付费调用另按授权，不把模型已调用、ASR 或信号检查写成听审通过。
+- 先在实际音频定位完整句、转折、比较对象切换和问答边界，同时保留原本已自然停顿的反例；字幕分段或强制对齐的零间隔不能单独证明缺少气口。
+- 长音频分块强制对齐时，音频窗口与指定文本须覆盖同一段真实发声，不能给含相邻语句的重叠窗口却只提供当前句文本。用 ASR 粗定位，再在已核对的低能量句界划分 QA 副本，保留原声并记录窗口偏移与全文覆盖；缓存绑定源音频、文本及实际采样窗口。出现跨块错位先检查窗口与文本是否匹配，不靠放宽阈值或强夹时间掩盖。
+- 生成单元按完整意义划分。过短的引入句与它紧接的数字结果可合为一个单元；逐句拆得越碎，源尾与下一源头的安静越可能累加，不能把分段数量当作改善程度。
+- 用户要求全文一次生成时，将完整原文作为一次底层模型调用，核对未自动拆句或分段；一次脚本运行、一次批处理或一个拼接后的WAV都不等于连续生成。保留原声，核对全文覆盖、原生结束和实际听感后再同步成片；不再只做分段降音量来代替生成方式的调整。
+- 长音频整块解码超出本机内存或缓冲区限制时，优先保存并复用已生成的完整语音编码，使用模型支持的有状态流式解码，不重新按句分段配音。核对解码会话未重置、所有编码与采样完整覆盖，并用短范围整块/流式波形对照验证实现；解码分块不等于文稿分段合成，也不能据此宣称听感已通过。
+- 用户要求调整停顿时，先检查覆盖核心推理的连续样段和拼接后的实际间隔。按句意补足缺失的气口、缩短过长的安静，不能每个标点统一加同样静音。保留已确认措辞和音色，不后期拉伸人声；只有实际语音漏字、读错或无法安全处理的断词，才重新生成受影响语义单元。
+- 停顿编辑须同时核对语义、字词边界和低能量无声区。剪掉过长安静时优先取中部，保护首音、尾音和呼吸；补气口时先计入已有停顿，避免重复叠加。信号与字词边界有冲突时不强剪，不从有声区域找切点，不靠切短声音凑速度。
+- 保留完整原声及每次增删的采样区间、边界依据和保留片段映射；检查拼接两侧是否产生突变。总时长改变后，重新映射字词、字幕、镜头、动作与音效，再检查最终编码文件。可以沿用已核对的旧语音修停顿，不因已有新候选而强行替换。
+- 短段 ASR 可能在安静尾部反复编字，也可能将近音词一致转写成另一词；多个识别结果一致仍不能单凭转写判定读音错误。正文完整性可结合不提供原稿的连续识别、独立短段结果及实际原声定位；强制对齐是时间估计，不是独立发音证明。用户实际听过并确认正确的片段应保留，不为提高识别一致率继续重生成；确认范围只限已听片段。记录听审是否真实完成，不以机器指标代替听感结论。
+- 审查转写前核对片段时间轴：结束不晚于开始、整段起于源文件结束之后，或同一文本被重复标到同一源时间区间，都先标成转写时间戳异常并保留原始输出与依据。跨过文件末尾但仍覆盖有效发音的片段不能整段盲删；也不能把剔除重复转写当成剪掉了重复音频，或当成发音与自然度通过。
+- 原生目标时长也可能截断尾字：即使识别给出了完整文本，仍检查最后一个音节与实际文件边界。若显著发声持续到末帧，保留旧候选，适度增加该语义段的原生生成时长并复核全文与尾音；若增加的时长主要变成停顿而尾音仍异常，可按完整句分别原生生成，逐句核对首尾后再拼接，不在词组内部切分。分句缓存按生成参数及文件摘要校验，恢复任务时复用有效句子。补尾部静音、强制对齐到边界或淡出有声尾部都不能补回缺失的发音。
+- 仅调整字幕或时码时，若音频采样、采样率和声道完全相同，保留原WAV文件；浮点WAV的峰值块可能含写入时间，重复保存会改变文件摘要。只在样本实际变化时重写音频，并刷新绑定该文件的混音和验收凭据。
+
+## Editing the music
+
+- Find seams: `python3 <this skill's directory>/scripts/music_loops.py music.mp3 beats.json [--len 8 14] [--from 9 --to 74]` compares each bar's spectrum and lists spans you can repeat or cut without an audible seam (0.99+ is usually inaudible). Cuts can also put key lines on the music, e.g. dropping a few intro bars so the reveal lands on the first big hit
+- Build: `python3 <this skill's directory>/scripts/cut_music.py music.mp3 beats.json --bars 5-21 14-30 … 75-end -o music-edit.wav`, a 20 ms crossfade on each bar line, beat grid exact. Run `beats.py` on the result to confirm the loudness changes are where you want them
+- Give `timing.py` the same `--bars` list
+
+## Sound effects
+
+- Use **recorded** sounds. In testing, dozens of code-synthesized paper and scribble sounds over music came across as "nothing but noise"
+- Foley: Kenney's CC0 packs (`python3 <this skill's directory>/scripts/sfx.py kenney`): paper slapped down = card place / slide, something heavy lands = book placed, rubber stamp = dull wood impact, light tap = tick
+- Whooshes, pops, pings and risers: use an available licensed library. A separate HyperFrames media-use bundle was used in an older project; it is not included here. Verify each source and its current license.
+- **Sparse**: one whoosh per scene change, the few key hits (reveal, twist, stamps), one or two others per screen; rotate between recordings of the same sound; skip sounds that are noise by nature (pen scribbles, error beeps)
+- List the times in a cues.json and mix with `sfx.py mix` (each sample normalized first; volume guidance at the top of the script)
+
+## Loudness and delivery
+
+- For the render, set each `<audio>`'s `data-volume` to about 0.45: stacked tracks over -1 dBFS true peak make HyperFrames fail at the very last step
+- Afterwards, mix the delivery track (music x0.8 + effects), bring it to -14 LUFS with a -1.5 dB ceiling, and swap it into the render with ffmpeg (`-map 0:v -map 1:a -c:v copy`, no re-render). Commands at the top of `sfx.py`; later effect changes go the same way
+- Before swapping audio or re-encoding, check the render is newer than `index.html`: `render | grep` hides a failed exit code, and you'd put new audio on old picture
+
+## Public-domain music; snap to notes, not bars (10-05 / 10-06)
+
+- Wikimedia Commons has public-domain recordings you can use commercially; check the license through the API (as in `images.md`). Bach's Prelude in C major, BWV 846 (Kimiko Ishizaka) and Satie's Gymnopédie No. 1 (Robin Alciatore) have both been used. One piece often has several recordings: look at a spectrogram for the noise floor first; two other "public domain" recordings were too noisy
+- **Don't reuse the hit's music**: its source was unclear, many commenters recognised it, and reusing it reads as copying
+- For rubato or triple-meter pieces, `beats.py`'s steady 4/4 fit drifts. Snap each screen change to the strongest note onset within ±0.6 s instead (librosa `onset_strength` + `peak_pick`), so changes land on a piano note
+- This video used 29 sound effects, all quiet, each on a visible action; the payoff line got none
+- Solo piano is very quiet raw (−26 to −33 LUFS): compress gently first (threshold −30 dB, ratio 2), then bring it to −15 LUFS rather than forcing −14
