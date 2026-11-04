@@ -1,4 +1,4 @@
-# Sound: music edits, effects, loudness
+# 配音、音乐、音效与听审
 
 ## 按主题与情绪选曲
 
@@ -7,7 +7,7 @@
 - 一首合适的曲子可以贯穿全片；只有明确的情绪转折或内容需要时，再考虑换段或换曲。不要求逐段编排、频繁切换或复杂卡点。
 - 日常选曲保持简单，不默认做音源分离、频谱或分贝对标；技术测量只在具体声音问题需要时辅助使用，不能代替曲风、情绪与主题是否匹配的试听判断。
 
-以下剪辑工具、参数和旧案例按实际需要参考，不是每条视频的必做流程。
+以下配音与返修经验按当前任务需要读取。
 
 ## 文案与讲述方式共同试读
 
@@ -50,30 +50,9 @@
 - 原生目标时长也可能截断尾字：即使识别给出了完整文本，仍检查最后一个音节与实际文件边界。若显著发声持续到末帧，保留旧候选，适度增加该语义段的原生生成时长并复核全文与尾音；若增加的时长主要变成停顿而尾音仍异常，可按完整句分别原生生成，逐句核对首尾后再拼接，不在词组内部切分。分句缓存按生成参数及文件摘要校验，恢复任务时复用有效句子。补尾部静音、强制对齐到边界或淡出有声尾部都不能补回缺失的发音。
 - 仅调整字幕或时码时，若音频采样、采样率和声道完全相同，保留原WAV文件；浮点WAV的峰值块可能含写入时间，重复保存会改变文件摘要。只在样本实际变化时重写音频，并刷新绑定该文件的混音和验收凭据。
 
-## Editing the music
+## 音效、混音与交付
 
-- Find seams: `python3 <this skill's directory>/scripts/music_loops.py music.mp3 beats.json [--len 8 14] [--from 9 --to 74]` compares each bar's spectrum and lists spans you can repeat or cut without an audible seam (0.99+ is usually inaudible). Cuts can also put key lines on the music, e.g. dropping a few intro bars so the reveal lands on the first big hit
-- Build: `python3 <this skill's directory>/scripts/cut_music.py music.mp3 beats.json --bars 5-21 14-30 … 75-end -o music-edit.wav`, a 20 ms crossfade on each bar line, beat grid exact. Run `beats.py` on the result to confirm the loudness changes are where you want them
-- Give `timing.py` the same `--bars` list
-
-## Sound effects
-
-- Use **recorded** sounds. In testing, dozens of code-synthesized paper and scribble sounds over music came across as "nothing but noise"
-- Foley: Kenney's CC0 packs (`python3 <this skill's directory>/scripts/sfx.py kenney`): paper slapped down = card place / slide, something heavy lands = book placed, rubber stamp = dull wood impact, light tap = tick
-- Whooshes, pops, pings and risers: use an available licensed library. A separate HyperFrames media-use bundle was used in an older project; it is not included here. Verify each source and its current license.
-- **Sparse**: one whoosh per scene change, the few key hits (reveal, twist, stamps), one or two others per screen; rotate between recordings of the same sound; skip sounds that are noise by nature (pen scribbles, error beeps)
-- List the times in a cues.json and mix with `sfx.py mix` (each sample normalized first; volume guidance at the top of the script)
-
-## Loudness and delivery
-
-- For the render, set each `<audio>`'s `data-volume` to about 0.45: stacked tracks over -1 dBFS true peak make HyperFrames fail at the very last step
-- Afterwards, mix the delivery track (music x0.8 + effects), bring it to -14 LUFS with a -1.5 dB ceiling, and swap it into the render with ffmpeg (`-map 0:v -map 1:a -c:v copy`, no re-render). Commands at the top of `sfx.py`; later effect changes go the same way
-- Before swapping audio or re-encoding, check the render is newer than `index.html`: `render | grep` hides a failed exit code, and you'd put new audio on old picture
-
-## Public-domain music; snap to notes, not bars (10-05 / 10-06)
-
-- Wikimedia Commons has public-domain recordings you can use commercially; check the license through the API (as in `images.md`). Bach's Prelude in C major, BWV 846 (Kimiko Ishizaka) and Satie's Gymnopédie No. 1 (Robin Alciatore) have both been used. One piece often has several recordings: look at a spectrogram for the noise floor first; two other "public domain" recordings were too noisy
-- **Don't reuse the hit's music**: its source was unclear, many commenters recognised it, and reusing it reads as copying
-- For rubato or triple-meter pieces, `beats.py`'s steady 4/4 fit drifts. Snap each screen change to the strongest note onset within ±0.6 s instead (librosa `onset_strength` + `peak_pick`), so changes land on a piano note
-- This video used 29 sound effects, all quiet, each on a visible action; the payoff line got none
-- Solo piano is very quiet raw (−26 to −33 LUFS): compress gently first (threshold −30 dB, ratio 2), then bring it to −15 LUFS rather than forcing −14
+- 音效落在看得见的接触、动作结果和状态变化处，素材保留来源与许可。声音数量由叙事需要决定；重复噪声和每镜固定提示音容易盖住正文。
+- 先保留已确认人声，再混入音乐与音效。响度、峰值和增益记录清楚，实际试听人声是否可辨、音色与强弱是否改变；技术指标不是听感结论。
+- 只改音乐或音效时，可以在画面和时码不变的前提下复用视频流，但须核对音轨版本、总时长及同步。输出到新文件，不能把新声音装到过期画面。
+- 最后从正文结尾连着片尾原速播放，检查答案、语气、动作、音乐与留白是否共同收束；不以固定留白秒数替代判断。

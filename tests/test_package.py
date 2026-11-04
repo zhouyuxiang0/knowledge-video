@@ -10,7 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 class PackageTests(unittest.TestCase):
     def test_skills_are_discoverable_and_self_contained(self):
         entries = sorted((ROOT / 'skills').glob('*/SKILL.md'))
-        self.assertEqual(len(entries), 2)
+        self.assertEqual([entry.parent.name for entry in entries], ['knowledge-video'])
         for entry in entries:
             text = entry.read_text(encoding='utf-8')
             header = text.split('---', 2)[1]
@@ -18,6 +18,8 @@ class PackageTests(unittest.TestCase):
             self.assertRegex(header, r'(?m)^description: .+')
             self.assertTrue((entry.parent / 'LICENSE').is_file())
             for doc in entry.parent.rglob('*.md'):
+                if 'node_modules' in doc.parts:
+                    continue
                 for link in re.findall(r'\]\(([^)]+)\)', doc.read_text(encoding='utf-8')):
                     url = urlsplit(link)
                     if url.scheme or not url.path:
@@ -35,7 +37,7 @@ class PackageTests(unittest.TestCase):
 
     def test_python_syntax_and_no_machine_paths(self):
         for path in (ROOT / 'skills').rglob('*'):
-            if not path.is_file() or path.suffix not in {'.py', '.js', '.md', '.html', '.txt'}:
+            if not path.is_file() or path.suffix not in {'.py', '.js', '.mjs', '.md', '.html', '.txt'} or 'node_modules' in path.parts:
                 continue
             text = path.read_text(encoding='utf-8')
             if path.suffix == '.py':

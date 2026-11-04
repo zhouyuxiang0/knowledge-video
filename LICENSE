@@ -2,7 +2,6 @@ MIT License
 
 Copyright (c) 2026 zhouyuxiang0
 Portions Copyright (c) 2026 Win-Hao
-Portions Copyright (c) 2026 vibe-knowledge-film contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -23,4 +22,4 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 Third-party fonts and externally referenced media retain their own licenses.
-See THIRD_PARTY_NOTICES.md and the licenses within each skill directory.
+See THIRD_PARTY_NOTICES.md and skills/knowledge-video/LICENSE.

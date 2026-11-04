@@ -1,33 +1,12 @@
-# HyperFrames pitfalls
+# 当前导出与同步中的排错经验
 
-Check here first when a render fails, the picture is off, something vanishes or the sound is wrong. All hit in a tested video (2025-10).
+- **时间必须能重建状态。** 以绝对时间求姿势、镜头和字幕；随机种子固定。资源与字体加载完才报告就绪，乱序跳转后检查同一时刻。起点与终点正确不能证明中段正确。
+- **语音空隙不能跳错镜头。** 旁白段落之间保持最近已开始的镜头；区间查询未命中时不能默认跳到末镜。检查每个切点前后、开头和片尾。
+- **同一机制共用数据。** 主画面、放大区和标签共用时间与状态；“距离近”与“正在靠近”分别用位置和方向判断。箭头、底板与文字的绘制层次在相遇时刻检查。
+- **相机运动检查整个主体。** 保持关键识别线索清晰，沿运动中段及切前末帧检查轮廓、遮挡和字幕安全区；不能只查中心点。修改共享场景函数后回查所有调用与相邻镜头。
+- **静态纹理优先。** 随机噪点每帧变化会放大编码负担，平台重编码也可能产生块状噪声。纸纹与颗粒可复用固定纹理，不能让装饰损害主体清晰度。
+- **错误必须传播。** 页面异常、编码器提前退出、帧输入失败都应中断；不要通过管道过滤掉退出码。渲染期间冻结输入，失败产物不提升为交付版。
+- **颜色看编码文件。** 当前导出明确标记有限范围 YUV 与 BT.709；换硬件编码器或平台后核查实际色彩标签和观感。浏览器截图正常不证明平台播放颜色相同。
+- **声音长度先对齐。** 混音准备到目标时长，再核对最终音视频流。末尾补静音不能补回缺失尾音；完整解码、波形与 ASR 都不替代实际听审。
 
-- **Two tweens on the same element and property must not overlap in time** (e.g. a push-in still running when the reset starts): a snapshot jumps to one moment and looks fine, but a render plays forward and the earlier tween wins. End one before the next begins; keep separate properties apart (parallax on x, bobbing on y)
-- **Later `fromTo`s get `immediateRender: false`**: only the first on a property should apply immediately, or a later state (camera moves especially) shows from the start
-- **ids unique across the page**: a duplicate silently sends an animation to the wrong element (a parallax layer and a note both named `s10-l1` left that layer, and its image, never moving into view). Scan the built page for duplicates
-- `data-start` on an `<svg>` is ignored; put timing on a wrapping `<div>`
-- Animating `clip-path: inset(...)` with GSAP can make the element vanish; animate the width of an `overflow: hidden` wrapper, or `scaleX`
-- When splitting text into per-character spans at runtime (typewriter, letter pops), styles written for `.head span` hit every character; scope container styles as `.head > span`
-- Douyin Sans' GSUB table can't be subset; add `--drop-tables+=GSUB,GPOS`
-- Deliberate overlaps trip check's layout audit; when intended, add `data-layout-allow-overlap` / `-occlusion` / `-overflow`
-- Audio peaks failing the last step, failed renders hidden by a pipe: see `sound.md`
-- Detailed pictures render large at `--quality delivery` (about 870 MB for 3.5 minutes); re-encode with `-c:v libx264 -preset slow -crf 19 -pix_fmt yuv420p -c:a aac -b:a 256k -movflags +faststart` (about 400 MB, no visible difference)
-- Render time on an Apple-silicon Mac: 13-second opening about 35 s; 3.5 minutes 4.5 min (plain) to 8 min (dense collage)
-
-## Canvas animation (10-06, *Fish and Bear's Paw*)
-
-- One full-screen `<canvas>`, every dot and line drawn by `draw(t)`; a proxy tween from 0 to the full duration on the main timeline calls `draw(proxy.t)` in `onUpdate`, so every rendered frame is right. Seed the PRNG
-- Labels that move with the camera are drawn on the canvas (`fillText`); text that stays put on screen (captions, readouts) is DOM. Hide on-screen readouts while the camera rotates, or they sit on top of the turned picture
-- Keep the template in `src/`, not the project root: a second HTML with `data-composition-id` in the root fails lint with `multiple_root_compositions`
-- If `pyftsubset` isn't on PATH, use `python3 -m fontTools.subset`
-- Typewriter text: a centered line revealed by hidden spans sits off to the left at frame 0; show the first line whole at frame 0 and type the second
-- Film grain that changes every frame bloats the render (1.8 GB for 3 minutes, still 900 MB re-encoded); one static grain tile brings the re-encoded file to about 135 MB
-
-## Three.js 机制演示
-
-- 多视角共用同一组物体、世界光照与时间，仅切换相机；不要独立画一个看似同步的结果窗口。分别匹配每个 viewport 的相机宽高比，用球体检查是否被拉成椭圆。
-- 自转、公转与观察方向分别核对坐标系和正负方向。需要保持朝向关系时写小断言，并实际看运动中段；起点和终点正确不能证明过程正确。
-- 用绝对时间重建每帧状态，资源与字体加载完成后再抓帧；乱序跳转后比较画面。光照和几何示意不等于物理仿真，不按比例或省略的效应须在影响理解处说明。
-- 旁白段落之间有安静空隙时，保持最近已开始的镜头，不能在区间查询未命中时跳到末镜。检查每个切点前后、开头留白和片尾留白，而不只检查各段中间。
-- 需要持续追踪同一主体时，让它独占关键识别线索；沿相机移动过程和切前末帧检查整个主体轮廓、遮挡和字幕安全区，不能只查中心点或几个均匀时刻。局部跟拍与世界远景分别插值时，尤其检查中段漂移。
-- 随物体或状态移动的方向标记会相遇；检查相遇时刻的标签避让和绘制层次，先画箭头、后画文字底板，避免箭头穿过另一标签的文字。最终编码抽帧发现的问题，要回到全部调用镜头复核。
+导出接口见 [tools.md](tools.md)，最终文件检查见 [quality-gates.md](quality-gates.md)。本包不保留早期其他引擎的排错指令。

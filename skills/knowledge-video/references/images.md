@@ -6,8 +6,8 @@
 - Take the license from the file page. Wikimedia Commons: `https://commons.wikimedia.org/w/api.php?action=query&prop=imageinfo&iiprop=extmetadata&format=json&titles=File:NAME`, read `LicenseShortName` and `Artist`
 - For each: the URL (its file page), which part, which scene and screen, license, author; write credit text ready for the description
 - Flag easy mismatches: same model but not the same machine, a later interface version… so on-screen text never claims "this is the one"
-- Let the user choose how images arrive: they capture them (default, into `assets/`, names starting with the scene number); you save them (only what the license allows); if a site won't open, switch sources or ask for their own images
-- Real people who are named: use a freely licensed photo if one exists (as a photo card, see `visuals.md`); otherwise just their name, never an AI-drawn face
+- Use the project's agreed acquisition route; keep source links and license records beside the assets.
+- Real people who are named: use a freely licensed photo if one exists; otherwise just their name, never an AI-drawn face
 
 ## AI-generated illustrations → `image-prompts.md`
 
@@ -21,5 +21,4 @@
 - Each entry: file name (scene number first), orientation and rough size, transparent or full-frame, the full prompt, which scene and screen
 - Check the pixels available to each visible part at the largest planned shot, not just the atlas's total dimensions. A large full-body sheet can still contain a small, blurry head. When a close shot exceeds that detail, prepare a matching dedicated head or expression atlas; align scalp, chin, ears and neck with the accepted rig, then inspect all expressions and their transitions in the actual scene. Enlarging or sharpening the old crop does not restore missing detail.
 - When images arrive, trim the transparent padding to the opaque pixels before placing them; generated images carry wide margins and push subjects off screen
-- If you can call an image API directly: tell the user "images × price" first; about 3 requests in flight; if polling drops, fetch by task id instead of resubmitting (or you pay twice)
 - Record generation provenance and prompts in `credits.md`. Public description text, platform labels and publishing actions follow the approved publication workflow.
